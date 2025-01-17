@@ -1,0 +1,5 @@
+https://devnet.irys.xyz/DH47PNDqaDwjKp1uHbFmQz9QZa8y7fa48BXDLEwMwLj1 - image
+https://devnet.irys.xyz/H4gVWDy3bccWzJJsb9Uv4mG5yTsTEtd7nbPkaPSv6ea2 - metadata
+
+https://explorer.solana.com/tx/2bDiDz7bT3kPa9PTVR4NSJ6uCmBSV4RxtUvCDUK9ZzBrQogtZe7dz87bAP6LymHU6bUpbUCj5RGqQYGQ23zFLYPs?cluster=devnet - trans
+https://explorer.solana.com/address/HawP6FQ8xnTtPSyvdMaprAZYsPxGN1szUpKRUf1Bfk12?cluster=devnet - mint

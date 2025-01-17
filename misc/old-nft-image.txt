@@ -1,0 +1,6 @@
+https://devnet.irys.xyz/9ZxzMYKm457vawkPpZo1AtgWmgLCC2NSsWoTYCD8u6eP – path
+https://devnet.irys.xyz/5ya1j3sAW3tWu3xvaWroxrLuTZHBT82S5PZ5dPPgP7B7 – metadata
+
+https://explorer.solana.com/tx/3bLV1TUd5NK7RPW7daWFm8QSfmaCyUvnXj1z7WMzHnrCjMomPkNWyF62MvN3MoBpptprsyEFAECNd7Ehroxpq7LL?cluster=devnet – trans
+https://explorer.solana.com/address/4KXJ8QAhXmfH3o1wHRf1usvKqEto2RKxKP77BHzXxGMr?cluster=devnet – mint
+
