@@ -1,0 +1,20 @@
+[package]
+name = "vault_q3_video"
+version = "0.1.0"
+description = "Created with Anchor"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "vault_q3_video"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+idl-build = []
+
+[dependencies]
+anchor-lang = "0.29.0"
