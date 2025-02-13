@@ -1,0 +1,51 @@
+flowchart TB
+    subgraph Programs["Core Programs"]
+        SP["SquidPool Program"]
+        YP["Yield Program"]
+    end
+
+    subgraph PDAs["Program Derived Addresses"]
+        POOL["Pool PDA<br>seeds: [b'pool']"]
+        USER["User State PDA<br>seeds: [b'user', pubkey]"]
+        TICKET["Ticket PDA<br>seeds: [b'ticket', user, round]"]
+        ROUND["Round State PDA<br>seeds: [b'round', round_number]"]
+    end
+
+    subgraph Accounts["Program Accounts"]
+        direction TB
+        PA["Pool Account<br>- total_staked: u64<br>- total_rewards: u64<br>- current_round: u64<br>- admin: Pubkey"]
+        UA["User Account<br>- staked_amount: u64<br>- rewards_earned: u64<br>- last_stake_ts: i64"]
+        TA["Ticket Account<br>- amount: u64<br>- round: u64<br>- claimed: bool"]
+        RA["Round Account<br>- start_ts: i64<br>- end_ts: i64<br>- prize_amount: u64<br>- winner: Option<Pubkey>"]
+    end
+
+    subgraph TokenAccounts["Token Accounts"]
+        PTV["Pool Token Vault<br>(SOL/USDC Pool)"]
+        YTV["Yield Token Vault<br>(Staking Returns)"]
+    end
+
+    subgraph External["External Components"]
+        SYP["Solana Yield Program<br>(thinking about Marinade, WIP)"]
+        VRF["VRF Oracle<br>(Chainlink?)"]
+    end
+
+    SP -- derives --> POOL & USER & TICKET & ROUND
+    POOL -- owns --> PA
+    USER -- owns --> UA
+    TICKET -- owns --> TA
+    ROUND -- owns --> RA
+    
+    SP -- interacts --> PTV & YTV
+    SP -- delegates --> YP
+    YP -- integrates --> SYP
+    SP -- random number --> VRF
+
+    classDef program fill:#4a90e2,stroke:#333,stroke-width:2px,color:white
+    classDef pda fill:#ff9671,stroke:#333,stroke-width:2px,color:white
+    classDef account fill:#4a90e2,stroke:#333,stroke-width:2px
+    classDef external fill:#9775fa,stroke:#333,stroke-width:2px,color:white
+    
+    class SP,YP program
+    class POOL,USER,TICKET,ROUND pda
+    class PA,UA,TA,RA account
+    class SYP,VRF external

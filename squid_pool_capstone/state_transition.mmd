@@ -1,0 +1,43 @@
+stateDiagram-v2
+    [*] --> Uninitialized
+    
+    Uninitialized --> Active: initialize_pool
+    Active --> RoundActive: start_round
+    
+    RoundActive --> Drawing: trigger_draw
+    Drawing --> RoundActive: draw_complete
+    
+    state RoundActive {
+        [*] --> Accepting
+        Accepting --> Full: max_tickets_reached
+        Full --> [*]
+    }
+    
+    state Drawing {
+        [*] --> RequestingRandom
+        RequestingRandom --> SelectingWinner: random_received
+        SelectingWinner --> DistributingPrize: winner_selected
+        DistributingPrize --> [*]: prize_distributed
+    }
+    
+    Active --> Paused: emergency_pause
+    Paused --> Active: resume
+    
+    state fork_state <<fork>>
+    Drawing --> fork_state: error
+    fork_state --> RoundActive: recoverable
+    fork_state --> Paused: critical
+    
+    note right of Paused
+        Emergency stop for:
+        - Critical errors
+        - Admin maintenance
+        - Security issues
+    end note
+    
+    note right of Drawing
+        Ensures atomic:
+        - Random generation
+        - Winner selection
+        - Prize distribution
+    end note

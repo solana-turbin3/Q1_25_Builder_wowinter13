@@ -1,0 +1,41 @@
+sequenceDiagram
+    participant U as User
+    participant SP as SquidPool Program
+    participant YP as Yield Program
+    participant SYP as Solana Yield Program
+    participant VRF as VRF Oracle
+
+    %% Staking Flow
+    U->>SP: deposit_and_stake(amount)
+    SP->>SP: Create/Update User PDA
+    SP->>SP: Create Ticket PDA
+    SP->>YP: delegate_stake(amount)
+    YP->>SYP: stake_sol(amount)
+    SP-->>U: Return ticket number
+
+    %% Yield Generation (periodic)
+    SYP->>YP: yield_rewards
+    YP->>SP: update_prize_pool
+    SP->>SP: Update Pool Account
+
+    %% Lottery Drawing
+    Note over SP: Drawing occurs at<br/>end of round
+    SP->>VRF: request_random_number
+    VRF-->>SP: return_random_result
+    SP->>SP: select_winner
+    SP->>SP: Update Round State
+
+    %% Prize Claim
+    U->>SP: claim_prize(round, ticket)
+    SP->>SP: Verify Winner
+    alt Is Winner
+        SP->>U: Transfer Prize
+    else Not Winner
+        SP-->>U: Return Error
+    end
+
+    %% Unstaking
+    U->>SP: unstake(amount)
+    SP->>YP: undelegate_stake
+    YP->>SYP: unstake_sol
+    SP->>U: Return Principal
